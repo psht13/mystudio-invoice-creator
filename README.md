@@ -21,11 +21,16 @@ npm run build
 ## Change default name (for forks)
 
 The default value in the **Name** field is set in `src/App.tsx`.
+You can also prefill it per-link by opening the app with `?name=Your%20Name`, for example:
+
+```text
+http://localhost:5173/?name=Jane%20Doe
+```
 
 Find this line:
 
 ```ts
-const [personName, setPersonName] = useState('Pavlo Yurchenko')
+const DEFAULT_PERSON_NAME = 'Pavlo Yurchenko'
 ```
 
 Replace `'Pavlo Yurchenko'` with your preferred default.

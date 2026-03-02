@@ -26,11 +26,22 @@ type Notice = {
 }
 
 const DEFAULT_HOURS = 8
+const DEFAULT_PERSON_NAME = 'Pavlo Yurchenko'
 const EDITABLE_STATUS_OPTIONS: EditableStatus[] = ['WORK', 'HOLIDAY', 'VACATION', 'OOO']
+
+function getInitialPersonName() {
+  if (typeof window === 'undefined') {
+    return DEFAULT_PERSON_NAME
+  }
+
+  const requestedName = new URLSearchParams(window.location.search).get('name')?.trim()
+
+  return requestedName || DEFAULT_PERSON_NAME
+}
 
 function App() {
   const defaultSelection = useMemo(() => getDefaultInvoiceSelection(), [])
-  const [personName, setPersonName] = useState('Pavlo Yurchenko')
+  const [personName, setPersonName] = useState(() => getInitialPersonName())
   const [monthValue, setMonthValue] = useState(defaultSelection.monthValue)
   const [runDay, setRunDay] = useState<RunDay>(defaultSelection.runDay)
   const [overrides, setOverrides] = useState<Record<string, DayOverride>>({})
