@@ -48,6 +48,10 @@ export const STATUS_LABEL: Record<DayStatus, string> = {
   OOO: 'OOO',
 }
 
+function shouldCollapseNonWorkRange(status: DayStatus): boolean {
+  return status === 'WEEKEND' || status === 'HOLIDAY' || status === 'VACATION'
+}
+
 function createUtcDate(year: number, monthIndex: number, day: number): Date {
   return new Date(Date.UTC(year, monthIndex, day))
 }
@@ -231,15 +235,17 @@ export function buildSheetEntries(days: DayRecord[]): SheetEntry[] {
 
     let rangeEnd = current.date
 
-    while (index + 1 < days.length) {
-      const next = days[index + 1]
-      const isConsecutive = next.date.getTime() - rangeEnd.getTime() === DAY_MS
-      if (next.status !== current.status || !isConsecutive) {
-        break
-      }
+    if (shouldCollapseNonWorkRange(current.status)) {
+      while (index + 1 < days.length) {
+        const next = days[index + 1]
+        const isConsecutive = next.date.getTime() - rangeEnd.getTime() === DAY_MS
+        if (next.status !== current.status || !isConsecutive) {
+          break
+        }
 
-      rangeEnd = next.date
-      index += 1
+        rangeEnd = next.date
+        index += 1
+      }
     }
 
     const dateLabel = isSameUtcDate(current.date, rangeEnd)

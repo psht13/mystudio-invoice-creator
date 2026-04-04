@@ -97,6 +97,39 @@ describe('sheet entry generation and totals', () => {
       { label: '2/28/2026 (Weekend)', hours: null },
     ])
   })
+
+  it('keeps consecutive OOO days as separate rows', () => {
+    const period = getPeriod('2026-03', '1')
+    const periodDays = listPeriodDays(period.startDate, period.endDate)
+
+    const overrides: Record<string, DayOverride> = {
+      '2026-02-16': { status: 'WORK', hours: 6 },
+      '2026-02-23': { status: 'OOO', hours: 8 },
+      '2026-02-24': { status: 'OOO', hours: 8 },
+      '2026-02-25': { status: 'VACATION', hours: 8 },
+      '2026-02-26': { status: 'VACATION', hours: 8 },
+      '2026-02-27': { status: 'HOLIDAY', hours: 8 },
+    }
+
+    const days = buildDayRecords(periodDays, overrides)
+    const totalHours = calculateTotalWorkHours(days)
+    const entries = buildSheetEntries(days)
+
+    expect(totalHours).toBe(38)
+    expect(entries).toEqual([
+      { label: '2/16/2026', hours: 6 },
+      { label: '2/17/2026', hours: 8 },
+      { label: '2/18/2026', hours: 8 },
+      { label: '2/19/2026', hours: 8 },
+      { label: '2/20/2026', hours: 8 },
+      { label: '2/21/2026 - 2/22/2026 (Weekend)', hours: null },
+      { label: '2/23/2026 (OOO)', hours: null },
+      { label: '2/24/2026 (OOO)', hours: null },
+      { label: '2/25/2026 - 2/26/2026 (Vacation)', hours: null },
+      { label: '2/27/2026 (Holiday)', hours: null },
+      { label: '2/28/2026 (Weekend)', hours: null },
+    ])
+  })
 })
 
 describe('workbook generation', () => {
