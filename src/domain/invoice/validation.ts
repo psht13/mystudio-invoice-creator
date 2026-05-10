@@ -68,10 +68,7 @@ export function parseRunDayValue(value: unknown): RunDay {
   return value === '16' ? '16' : '1'
 }
 
-export function validateMonthValueParsing(
-  monthValue: string,
-  fallbackDate?: Date,
-): MonthValueParsingValidation {
+export function validateMonthValueParsing(monthValue: string, fallbackDate?: Date): MonthValueParsingValidation {
   const [yearText, monthText] = monthValue.split('-')
   const year = Number(yearText)
   const monthIndex = Number(monthText) - 1

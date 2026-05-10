@@ -4,10 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { DownloadFileParams, FileDownloader } from '../src/application/ports/file-downloader'
 import type { TemplateLoader } from '../src/application/ports/template-loader'
-import type {
-  GenerateWorkbookFromTemplateParams,
-  WorkbookWriter,
-} from '../src/application/ports/workbook-writer'
+import type { GenerateWorkbookFromTemplateParams, WorkbookWriter } from '../src/application/ports/workbook-writer'
 import {
   validateInvoicePersonName,
   validateInvoiceSheetRowCapacity,

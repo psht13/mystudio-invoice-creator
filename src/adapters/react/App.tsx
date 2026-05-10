@@ -19,8 +19,8 @@ function App() {
           <p className="kicker">Invoice Builder</p>
           <h1>Automatic Time-Tracking Excel Generator</h1>
           <p>
-            Uses your original spreadsheet templates and keeps the same workbook format while auto-filling
-            weekends, work hours, and custom day statuses.
+            Uses your original spreadsheet templates and keeps the same workbook format while auto-filling weekends,
+            work hours, and custom day statuses.
           </p>
         </header>
 

@@ -1,8 +1,4 @@
-import {
-  validatePersonNamePresence,
-  validateSheetRowCapacity,
-  type SheetEntry,
-} from '../../domain/invoice'
+import { validatePersonNamePresence, validateSheetRowCapacity, type SheetEntry } from '../../domain/invoice'
 
 export type InvoiceGenerationValidationNotice = {
   type: 'error'

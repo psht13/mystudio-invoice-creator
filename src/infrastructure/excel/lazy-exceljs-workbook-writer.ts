@@ -1,7 +1,4 @@
-import type {
-  GenerateWorkbookFromTemplateParams,
-  WorkbookWriter,
-} from '../../application/ports/workbook-writer'
+import type { GenerateWorkbookFromTemplateParams, WorkbookWriter } from '../../application/ports/workbook-writer'
 
 export class LazyExcelJSWorkbookWriter implements WorkbookWriter {
   #writerPromise: Promise<WorkbookWriter> | null = null
